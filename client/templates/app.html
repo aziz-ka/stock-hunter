@@ -1,0 +1,60 @@
+<head></head>
+
+<body>
+  <!-- {{> loginButtons}} -->
+</body>
+
+<template name="home">
+  <div class="container-fluid">
+
+    <div class="text-right col-xs-12">
+      <button class="signin-btn btn btn-primary">Sign In</button>
+      <button class="signup-btn btn btn-primary">Sign Up</button>
+    </div>
+
+    <h1 class="text-center col-xs-12">Know Your Options</h1>
+
+    <form action="" class="form-inline col-xs-12 ticker-form">
+      <div class="form-group">
+        <label for="" class="sr-only">Ticker Symbol</label>
+        <input type="text" class="form-control text-uppercase" name="ticker" placeholder="Ticker Symbol" value="FB">
+      </div>
+
+      <div class="form-group">
+        <label for="" class="sr-only">Expiration Date</label>
+        <input type="date" class="form-control" name="expDate" value="2015-07-17">
+      </div>
+
+      <button type="submit" class="btn btn-info">Submit</button>
+    </form>
+
+    <div class="col-xs-12">
+    <table class="table table-bordered">
+      <thead>
+        <tr>
+          <th colspan="4">Calls</th>
+          <th id="empty" class="text-primary"></th>
+          <th colspan="4">Puts</th>
+        </tr>
+      </thead>
+
+      <tbody>
+        <tr>
+          <td class="C open_interest"><span class="text-uppercase"><strong>Open Int</strong></span></td>
+          <td class="C volume"><span class="text-uppercase"><strong>Volume</strong></span></td>
+          <td class="C bid"><span class="text-uppercase"><strong>Bid</strong></span></td>
+          <td class="C ask"><span class="text-uppercase"><strong>Ask</strong></span></td>
+          <td class="strike bg-info"><span class="text-uppercase"><strong>Strike</strong></span></td>
+          <td class="P ask"><span class="text-uppercase"><strong>Ask</strong></span></td>
+          <td class="P bid"><span class="text-uppercase"><strong>Bid</strong></span></td>
+          <td class="P volume"><span class="text-uppercase"><strong>Volume</strong></span></td>
+          <td class="P open_interest"><span class="text-uppercase"><strong>Open Int</strong></span></td>
+        </tr>
+      </tbody>
+    </table>
+    </div>
+
+    <div id="graph" class=""></div>
+
+  </div>
+</template>

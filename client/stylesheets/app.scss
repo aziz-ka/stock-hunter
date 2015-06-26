@@ -1,0 +1,26 @@
+body {
+  padding: 20px inherit;
+  h1 {
+    margin: 7% inherit;
+  }
+  table {
+    margin-top: 20px;
+    tr, th, td {
+      text-align: center;
+    }
+    tbody td {
+      padding: 8px 0 !important;
+    }
+    .data:nth-child(2n+1) {
+    background-color: #eee;
+    }
+    .strikePrice .data:nth-child(2n+1) {
+      background-color: rgba(134,205,255,.3);
+    }
+  }
+
+  #empty {
+    font-weight: 800;
+    font-size: 1.3em;
+  }
+}
