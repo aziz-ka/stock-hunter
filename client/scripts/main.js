@@ -1,6 +1,6 @@
 // Meteor.subscribe("API-token");
 
-Template.home.events({
+Template.tickerForm.events({
   "submit .ticker-form": function(e) {
     e.preventDefault();
 
@@ -19,5 +19,41 @@ Template.home.events({
   }
 });
 
+Template.signin.events({
+  "submit form": function(e) {
+    e.preventDefault();
+    var emailValue = e.target.email.value;
+    var passwordValue = e.target.password.value;
+    Meteor.loginWithPassword(emailValue, passwordValue);
+    $("#signin-form").modal("hide");
+    $(".modal-backdrop").remove();
+  }
+});
+
+Template.signup.events({
+  "submit form": function(e) {
+    e.preventDefault();
+    var emailValue = e.target.email.value;
+    var passwordValue = e.target.password.value;
+    Accounts.createUser({
+      email: emailValue,
+      password: passwordValue
+    });
+    $("#signup-form").modal("hide");
+    $(".modal-backdrop").remove();
+  }
+});
+
+Template.nav.events({
+  "click .signout-btn": function() {
+    Meteor.logout();
+  }
+});
+
+Template.nav.helpers({
+  userEmail: function() {
+    return Meteor.user().emails[0].address;
+  }
+})
 
 

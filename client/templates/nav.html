@@ -1,0 +1,80 @@
+<template name="nav">
+  <nav class="navbar navbar-default">
+    <div class="container-fluid">
+      <div class="navbar-header">
+        <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#navbar">
+          <span class="glyphicon glyphicon-menu-hamburger"></span>
+        </button>
+        <a href="/" class="navbar-brand">
+          <i class="fa fa-2x fa-line-chart"></i>
+        </a>
+        <div class="log-buttons navbar-right">
+        {{#if currentUser}}
+          <span>{{userEmail}}</span>
+          <button type="button" class="signout-btn btn btn-primary navbar-btn">Sign Out</button>
+        {{else}}
+          <button type="button" class="signin-btn btn btn-primary navbar-btn" data-toggle="modal" data-target="#signin-form">Sign In</button>
+          <button type="button" class="signup-btn btn btn-primary navbar-btn" data-toggle="modal" data-target="#signup-form">Sign Up</button>
+          {{> signin}}
+          {{> signup}}
+        {{/if}}
+        </div>
+      </div>
+
+      <div id="navbar" class="navbar-collapse collapse">
+        <ul class="nav navbar-nav">
+          <li><a href="/watchlists">Watchlists</a></li>
+          <li><a href="/posittions">Positions</a></li>
+          <li><a href="/options">Options</a></li>
+        </ul>
+      </div>
+    </div>
+  </nav>
+</template>
+
+<template name="signin">
+  <div class="modal fade" id="signin-form" role="dialog">
+    <div class="modal-dialog modal-sm" role="document">
+      <div class="modal-content">
+        <div class="modal-body">
+          <form action="">
+            <div class="form-group">
+              <label for="">Email</label>
+              <input type="email" class="form-control" name="email" placeholder="user@email.com">
+            </div>
+            <div class="form-group">
+              <label for="">Password</label>
+              <input type="password" class="form-control" name="password" placeholder="******">
+            </div>
+            <button type="submit" class="btn btn-primary">Sign In</button>
+          </form>
+        </div>
+        <div class="modal-footer">
+          <a href="#">Forgot Password</a>
+        </div>
+      </div>
+    </div>
+  </div>
+</template>
+
+<template name="signup">
+  <div class="modal fade" id="signup-form" role="dialog">
+    <div class="modal-dialog modal-sm" role="document">
+      <div class="modal-content">
+        <div class="modal-body">
+          <form action="">
+            <div class="form-group">
+              <label for="">Email</label>
+              <input type="email" class="form-control" name="email" placeholder="user@email.com">
+            </div>
+            <div class="form-group">
+              <label for="">Password</label>
+              <input type="password" class="form-control" name="password" placeholder="minimum 6 characters">
+            </div>
+            <button type="submit" class="btn btn-primary">Sign In</button>
+          </form>
+        </div>
+      </div>
+    </div>
+  </div>
+</template>

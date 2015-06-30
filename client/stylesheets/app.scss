@@ -1,7 +1,16 @@
 body {
-  padding: 20px inherit;
+  .fa-line-chart {
+    line-height: 20px;
+  }
+  .navbar-toggle {
+    padding: 6px 10px !important;
+  }
+  .log-buttons {
+    position: absolute;
+    right: 2em;
+  }
   h1 {
-    margin: 7% inherit;
+    margin: 3% auto 5%;
   }
   table {
     margin-top: 20px;
@@ -22,5 +31,11 @@ body {
   #empty {
     font-weight: 800;
     font-size: 1.3em;
+  }
+}
+
+@media(max-width: 768px) {
+  .log-buttons {
+    right: 5em !important;
   }
 }
