@@ -1,6 +1,11 @@
-// Meteor.publish("API-token", function() {
-//   return token;
-// });
+Meteor.publish("userData", function() {
+  var currentUser = this.userId;
+  return Meteor.users.find({"_id": currentUser});
+});
+
+Accounts.config({
+  forbidClientAccountCreation: true,
+});
 
 var token = "REX0QnMxrkwLpwYVGYgDIP0rnTmx";
 var optionsAPI = "https://api.tradier.com/v1/markets/options/chains?symbol=";
@@ -24,5 +29,16 @@ Meteor.methods({
       quotesAPI + ticker,
       { headers: headers }
     );
+  },
+
+  addToWatchlist: function(ticker) {
+    Meteor.users.update({"_id": this.userId}, {$push: {"watchlist": ticker}});
+  },
+
+  createNewUser: function(email, password) {
+    Accounts.createUser({
+      email: email,
+      password: password
+    });
   }
 });

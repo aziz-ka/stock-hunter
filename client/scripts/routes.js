@@ -6,4 +6,4 @@ Router.route("/options", function() {
   this.render("options");
 });
 
-// Router.route("options");
+Router.route("watchlists");

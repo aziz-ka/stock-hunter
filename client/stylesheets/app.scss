@@ -9,6 +9,13 @@ body {
     position: absolute;
     right: 2em;
   }
+  .watchlist {
+    margin-top: 20px;
+    .thumbnail {
+    font-size: 2em;
+    height: 2em;
+    }
+  }
   h1 {
     margin: 3% auto 5%;
   }
