@@ -36,9 +36,19 @@ Meteor.methods({
   },
 
   createNewUser: function(email, password) {
-    Accounts.createUser({
-      email: email,
-      password: password
-    });
+    if(password.length > 5) {
+      Accounts.createUser({
+        email: email,
+        password: password
+      });
+    } else {
+      var passwordError = new Meteor.Error(403, "Password must be at least 5 characters long");
+      throw passwordError;
+    }
   }
 });
+
+
+
+
+

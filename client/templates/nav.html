@@ -33,9 +33,16 @@
 </template>
 
 <template name="signin">
-  <div class="modal fade" id="signin-form" role="dialog">
+  <div class="modal fade sign-in-up" id="signin-form" role="dialog">
     <div class="modal-dialog modal-sm" role="document">
       <div class="modal-content">
+        <div class="modal-header hidden">
+          <!-- <p class="text-danger">Donec ullamcorper nulla</p> -->
+          <div class="alert alert-danger" role="alert">
+            <span class="glyphicon glyphicon-exclamation-sign"></span>
+            <span class="sr-only">Error:</span>
+          </div>
+        </div>
         <div class="modal-body">
           <form action="">
             <div class="form-group">
@@ -58,9 +65,16 @@
 </template>
 
 <template name="signup">
-  <div class="modal fade" id="signup-form" role="dialog">
+  <div class="modal fade sign-in-up" id="signup-form" role="dialog">
     <div class="modal-dialog modal-sm" role="document">
       <div class="modal-content">
+        <div class="modal-header hidden">
+          <!-- <p class="text-danger">Donec ullamcorper nulla</p> -->
+          <div class="alert alert-danger" role="alert">
+            <span class="glyphicon glyphicon-exclamation-sign"></span>
+            <span class="sr-only">Error:</span>
+          </div>
+        </div>
         <div class="modal-body">
           <form action="">
             <div class="form-group">
@@ -71,7 +85,7 @@
               <label for="">Password</label>
               <input type="password" class="form-control" name="password" placeholder="minimum 6 characters">
             </div>
-            <button type="submit" class="btn btn-primary">Sign In</button>
+            <button type="submit" class="btn btn-primary">Sign Up</button>
           </form>
         </div>
       </div>
