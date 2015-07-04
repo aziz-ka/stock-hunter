@@ -15,5 +15,11 @@
 
       <button type="submit" class="btn btn-info" {{disableSubmit}}>Submit</button>
     </form>
+
+    <div class="col-xs-12 list-group">
+      {{#each symbolList}}
+        <a href="#" class="list-group-item">{{description}}, <strong>{{symbol}}</strong></a>
+      {{/each}}
+    </div>
   </div>
 </template>

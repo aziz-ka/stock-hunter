@@ -10,6 +10,7 @@ Accounts.config({
 var token = "REX0QnMxrkwLpwYVGYgDIP0rnTmx";
 var optionsAPI = "https://api.tradier.com/v1/markets/options/chains?symbol=";
 var quotesAPI = "https://api.tradier.com/v1/markets/history?symbol=";
+var symbolLookupAPI = "https://api.tradier.com/v1/markets/lookup?q=";
 var headers = {
   "Authorization": "Bearer " + token,
   "Accept": "application/json"
@@ -28,6 +29,13 @@ Meteor.methods({
     return HTTP.get(
       quotesAPI + ticker,
       { headers: headers }
+    );
+  },
+
+  lookupSymbol: function(ticker) {
+    return HTTP.get(
+      symbolLookupAPI + ticker,
+      { headers: headers}
     );
   },
 

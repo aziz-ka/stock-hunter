@@ -1,5 +1,11 @@
 Meteor.subscribe("userData");
 
+//*** REACTIVE VARs ***\\
+
+Template.tickerForm.onCreated(function() {
+  this.symbols = new ReactiveVar();
+});
+
 //*** HELPERS ***\\
 
 Template.nav.helpers({
@@ -20,6 +26,9 @@ Template.tickerForm.helpers({
               "title": "You must sign in first"
             };
     }
+  },
+  symbolList: function() {
+    return Template.instance().symbols.get();
   }
 });
 
@@ -39,38 +48,56 @@ Template.nav.events({
 });
 
 Template.tickerForm.events({
-  "submit .ticker-form": function(e) {
-    e.preventDefault();
+  "keyup input[type='text']": function(event, template) {
+    $(".list-group").removeClass("hidden");
+    var ticker = event.target.value;
+    Meteor.call("lookupSymbol", ticker, function (error, lookupSymbolResult) {
+      console.log(lookupSymbolResult.data.securities.security);
+      template.symbols.set(lookupSymbolResult.data.securities.security.slice(0,10));
+    });
+  },
+
+  "click .list-group-item": function() {
+    var ticker = $(this)[0].symbol;
+    var tickerField = $(".ticker-form input[name='ticker']");
+    console.log(ticker);
+    tickerField.val(ticker);
+    $(".ticker-form").submit();
+    $(".list-group").addClass("hidden");
+  },
+
+  "submit .ticker-form": function(event) {
+    event.preventDefault();
 
     $(".data").empty();
 
-    var ticker = e.target.ticker.value.toUpperCase();
+    var ticker = event.target.ticker.value.toUpperCase();
     $("#empty").text(ticker);
 
-    if(Meteor.helperFunctions.currentUrl() === "options") {
-      var expDate = e.target.expDate.value;
+    if(Meteor.helperFunctions.currentUrl("options")) {
+      var expDate = event.target.expDate.value;
       Meteor.call("fetchOptions", ticker, expDate, function (error, optionsResult) {
         Meteor.options.options(optionsResult, ticker);
       });
     }
 
-    if(Meteor.helperFunctions.currentUrl() == undefined) {
+    if(Meteor.helperFunctions.currentUrl(undefined)) {
       Meteor.call("fetchQuotes", ticker, function (error, quotesResult) {
         Meteor.quotes.quotes(quotesResult, ticker);
       });
     }
 
-    if(Meteor.helperFunctions.currentUrl() === "watchlists") {
+    if(Meteor.helperFunctions.currentUrl("watchlists")) {
       Meteor.call("addToWatchlist", ticker);
     }
   }
 });
 
 Template.signin.events({
-  "submit form": function(e) {
-    e.preventDefault();
-    var emailValue = e.target.email.value;
-    var passwordValue = e.target.password.value;
+  "submit form": function(event) {
+    event.preventDefault();
+    var emailValue = event.target.email.value;
+    var passwordValue = event.target.password.value;
     Meteor.loginWithPassword(emailValue, passwordValue, function(error) {
       if(error) {
         Meteor.helperFunctions.displayError(error);
@@ -82,10 +109,10 @@ Template.signin.events({
 });
 
 Template.signup.events({
-  "submit form": function(e) {
-    e.preventDefault();
-    var emailValue = e.target.email.value;
-    var passwordValue = e.target.password.value;
+  "submit form": function(event) {
+    event.preventDefault();
+    var emailValue = event.target.email.value;
+    var passwordValue = event.target.password.value;
     Meteor.call("createNewUser", emailValue, passwordValue, function(error) {
       if(error) {
         console.log(error.reason);
