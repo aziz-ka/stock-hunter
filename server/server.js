@@ -33,10 +33,15 @@ Meteor.methods({
   },
 
   lookupSymbol: function(ticker) {
-    return HTTP.get(
-      symbolLookupAPI + ticker,
-      { headers: headers}
-    );
+    try {
+      var result = HTTP.get(
+        symbolLookupAPI + ticker,
+        { headers: headers }
+      );
+      return result.data.securities.security.slice(0,10);
+    } catch(error) {
+      return error;
+    }
   },
 
   addToWatchlist: function(ticker) {

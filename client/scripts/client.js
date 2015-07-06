@@ -44,17 +44,25 @@ Template.watchlists.helpers({
 Template.nav.events({
   "click .signout-btn": function() {
     Meteor.logout();
+  },
+  "click #navbar a": function() {
+    $(".navbar-toggle").click();
   }
 });
 
 Template.tickerForm.events({
   "keyup input[type='text']": function(event, template) {
-    $(".list-group").removeClass("hidden");
     var ticker = event.target.value;
-    Meteor.call("lookupSymbol", ticker, function (error, lookupSymbolResult) {
-      console.log(lookupSymbolResult.data.securities.security);
-      template.symbols.set(lookupSymbolResult.data.securities.security.slice(0,10));
-    });
+    if(event.keyCode > 64 && event.keyCode < 91) {
+      $(".list-group").removeClass("hidden");
+      Meteor.call("lookupSymbol", ticker, function (error, lookupSymbolResult) {
+        console.log(lookupSymbolResult);
+        template.symbols.set(lookupSymbolResult);
+      });
+    }
+    if(event.keyCode === 27 || ticker === "") {
+      $(".list-group").addClass("hidden");
+    }
   },
 
   "click .list-group-item": function() {
@@ -90,6 +98,9 @@ Template.tickerForm.events({
     if(Meteor.helperFunctions.currentUrl("watchlists")) {
       Meteor.call("addToWatchlist", ticker);
     }
+
+    $(".ticker-form input[name='ticker']").blur();
+    $(".list-group").addClass("hidden");
   }
 });
 

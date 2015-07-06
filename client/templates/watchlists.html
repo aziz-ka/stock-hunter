@@ -2,14 +2,14 @@
   {{> tickerForm}}
 
   <div class="container-fluid watchlist">
-    {{#each ticker}}
-      <!-- <div class="row"> -->
-        <div class="col-xs-2">
+    <div class="row">
+      {{#each ticker}}
+        <div class="col-xs-6 col-md-2">
           <a href="#" class="thumbnail text-center">
             {{this}}
           </a>
         </div>
-      <!-- </div> -->
-    {{/each}}
+      {{/each}}
+    </div>
   </div>
 </template>

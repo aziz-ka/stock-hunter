@@ -1,25 +1,31 @@
 <template name="tickerForm">
   <div class="container-fluid">
-    <form action="" class="form-inline col-xs-12 ticker-form">
-      <div class="form-group">
-        <label for="" class="sr-only">Ticker Symbol</label>
-        <input type="text" class="form-control text-uppercase" name="ticker" placeholder="Ticker Symbol" value="FB">
-      </div>
-
-      {{#if optionsUrl}}
-        <div class="form-group">
-          <label for="" class="sr-only">Expiration Date</label>
-          <input type="date" class="form-control" name="expDate" value="2015-07-17">
+    <div class="row">
+      <form action="" class="form-inline col-xs-12 ticker-form">
+        <div class="form-group width28">
+          <label for="" class="sr-only">Ticker Symbol</label>
+          <input type="text" class="form-control text-uppercase" name="ticker" placeholder="Ticker Symbol">
         </div>
-      {{/if}}
 
-      <button type="submit" class="btn btn-info" {{disableSubmit}}>Submit</button>
-    </form>
+        {{#if optionsUrl}}
+          <div class="form-group width43">
+            <label for="" class="sr-only">Expiration Date</label>
+            <input type="date" class="form-control" name="expDate" value="2015-07-17">
+          </div>
+        {{/if}}
 
-    <div class="col-xs-12 list-group">
-      {{#each symbolList}}
-        <a href="#" class="list-group-item">{{description}}, <strong>{{symbol}}</strong></a>
-      {{/each}}
+        <div class="form-group width26">
+          <button type="submit" class="btn btn-info" {{disableSubmit}}>Submit</button>
+        </div>
+      </form>
+    </div>
+
+    <div class="row">
+      <div class="col-xs-12 list-group hidden">
+        {{#each symbolList}}
+          <a href="#" class="list-group-item">{{description}}, <strong>{{symbol}}</strong></a>
+        {{/each}}
+      </div>
     </div>
   </div>
 </template>

@@ -5,9 +5,12 @@ body {
   .navbar-toggle {
     padding: 6px 10px !important;
   }
-  .log-buttons {
+  .navbar-text {
     position: absolute;
-    right: 2em;
+    right: 7em;
+  }
+  .navbar-collapse {
+    padding-right: 0;
   }
   .watchlist {
     margin-top: 20px;
@@ -23,8 +26,8 @@ body {
     }
   }
   .list-group {
-    padding-left: inherit;
-    margin: 5px 0;
+    padding-left: 15px;
+    margin-top: 5px;
     .list-group-item {
       padding: 5px 10px;
     }
@@ -32,13 +35,16 @@ body {
   h1 {
     margin: 3% auto 5%;
   }
-  table {
+  .table-responsive {
     margin-top: 20px;
     tr, th, td {
       text-align: center;
     }
     tbody td {
       padding: 8px 0 !important;
+    }
+    .data {
+      padding: 0 10px;
     }
     .data:nth-child(2n+1) {
     background-color: #eee;
@@ -54,8 +60,47 @@ body {
   }
 }
 
-@media(max-width: 768px) {
-  .log-buttons {
-    right: 5em !important;
+@media(max-width: 766px) {
+  body {
+    .navbar .nav {
+      border-bottom: 1px solid #e7e7e7;
+    }
+    .navbar-collapse {
+      padding-right: 15px;
+    }
+    .navbar-text {
+      right: 4.5em;
+    }
+    .ticker-form {
+      .form-group {
+        display: inline-block;
+        input[type="date"]::-webkit-inner-spin-button {
+          -webkit-appearance: none;
+          display: none;
+        }
+        input[type="date"]::-webkit-clear-button {
+          -webkit-appearance: none;
+          display: none;
+        }
+        button {
+          margin-bottom: 2px;
+        }
+      }
+      .width28 {
+        width: 28%;
+      }
+      .width43 {
+        width: 43%;
+      }
+      .width26 {
+        width: 26%;
+      }
+    }
+    .list-group {
+      margin-top: -10px;
+    }
+    .table-responsive {
+      margin-top: 0 !important;
+    }
   }
 }

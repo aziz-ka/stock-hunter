@@ -1,30 +1,34 @@
 <template name="options">
 {{> tickerForm}}
   <div class="container-fluid">
-    <div class="col-xs-12">
-      <table class="table table-bordered">
-        <thead>
-          <tr>
-            <th colspan="4">Calls</th>
-            <th id="empty" class="text-primary"></th>
-            <th colspan="4">Puts</th>
-          </tr>
-        </thead>
+    <div class="row">
+      <div class="col-xs-12">
+        <div class="table-responsive">
+          <table class="table table-bordered">
+            <thead>
+              <tr>
+                <th colspan="4">Calls</th>
+                <th id="empty" class="text-primary"></th>
+                <th colspan="4">Puts</th>
+              </tr>
+            </thead>
 
-        <tbody>
-          <tr>
-            <td class="C open_interest"><span class="text-uppercase"><strong>Open Int</strong></span></td>
-            <td class="C volume"><span class="text-uppercase"><strong>Volume</strong></span></td>
-            <td class="C bid"><span class="text-uppercase"><strong>Bid</strong></span></td>
-            <td class="C ask"><span class="text-uppercase"><strong>Ask</strong></span></td>
-            <td class="strike bg-info"><span class="text-uppercase"><strong>Strike</strong></span></td>
-            <td class="P ask"><span class="text-uppercase"><strong>Ask</strong></span></td>
-            <td class="P bid"><span class="text-uppercase"><strong>Bid</strong></span></td>
-            <td class="P volume"><span class="text-uppercase"><strong>Volume</strong></span></td>
-            <td class="P open_interest"><span class="text-uppercase"><strong>Open Int</strong></span></td>
-          </tr>
-        </tbody>
-      </table>
+            <tbody>
+              <tr>
+                <td class="C open_interest"><span class="text-uppercase"><strong>Open Int</strong></span></td>
+                <td class="C volume"><span class="text-uppercase"><strong>Volume</strong></span></td>
+                <td class="C bid"><span class="text-uppercase"><strong>Bid</strong></span></td>
+                <td class="C ask"><span class="text-uppercase"><strong>Ask</strong></span></td>
+                <td class="strike bg-info"><span class="text-uppercase"><strong>Strike</strong></span></td>
+                <td class="P ask"><span class="text-uppercase"><strong>Ask</strong></span></td>
+                <td class="P bid"><span class="text-uppercase"><strong>Bid</strong></span></td>
+                <td class="P volume"><span class="text-uppercase"><strong>Volume</strong></span></td>
+                <td class="P open_interest"><span class="text-uppercase"><strong>Open Int</strong></span></td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
     </div>
   </div>
 </template>
