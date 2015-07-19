@@ -1,19 +1,27 @@
 
 Meteor.quotes = {
 
-  quotes: function(quotesResult, ticker) {
+  quotes: function(quotesResult, ticker, dateRange) {
     console.log(quotesResult.data);
 
+    var step = 1;
     var dateArr = [];
     var closeArr = [];
     var volumeArr = [];
     var quoteData = quotesResult.data.history.day;
 
-    $(quoteData).each(function(i) {
+    if(quoteData.length >= 256 && dateRange >= 256) {
+      step = 5;
+    }
+    if(dateRange > quoteData.length) {
+      dateRange = quoteData.length;
+    }
+
+    for (var i = quoteData.length - dateRange; i < quoteData.length; i+=step) {
       closeArr.push(quoteData[i]["close"]);
       dateArr.push(quoteData[i]["date"]);
       volumeArr.push(quoteData[i]["volume"]);
-    });
+    }
 
     this.chart(ticker, closeArr, volumeArr, dateArr);
   },
@@ -62,6 +70,7 @@ Meteor.quotes = {
             color: Highcharts.getOptions().colors[0]
           }
         },
+        opposite: true,
         gridLineColor: "#eee",
         gridLineWidth: 0.5
       }, {
@@ -70,7 +79,6 @@ Meteor.quotes = {
         title: {
           text: "Volume"
         },
-        opposite: true,
         gridLineColor: "#eee",
         gridLineWidth: 0.5
       }],
@@ -78,10 +86,6 @@ Meteor.quotes = {
         shared: true
       },
       series: [{
-        name: "Closing Price",
-        data: close,
-        zIndex: 2
-      }, {
         name: "Volume",
         tooltip: {
           valueSuffix: " mil"
@@ -90,6 +94,10 @@ Meteor.quotes = {
         type: "column",
         data: volume,
         color: "#bbb",
+      }, {
+        name: "Closing Price",
+        data: close,
+        zIndex: 2
       }]
     });
   }

@@ -1,15 +1,16 @@
 <head>
   <meta name="viewport" content="width=device-width; initial-scale=1; minimum-scale=1; maximum-scale=1; user-scalable=no;">
   <meta name="description" content="Technical and fundamental data and portfolio managment">
-  <title>Optionizr - fast and easy on demand technical stock data</title>
+  <title>Stock Hunter - fund US stocks quotes, options chains, news and etc.</title>
 </head>
 
 <body>
   {{> nav}}
-  <h1 class="text-center col-xs-12">Stock Hunter</h1>
+  <h1 class="text-center col-xs-12 mainHeader">Stock Hunter</h1>
 </body>
 
 <template name="home">
   {{> tickerForm}}
   <div id="graph" class=""></div>  
+  {{> news}}
 </template>

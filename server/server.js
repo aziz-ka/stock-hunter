@@ -7,14 +7,20 @@ Accounts.config({
   forbidClientAccountCreation: true,
 });
 
+var now = new Date();
+var yyyy = now.getFullYear() - 2;
+var mm = now.getMonth() + 1;
+var dd = 01;
+
 var token = "REX0QnMxrkwLpwYVGYgDIP0rnTmx";
 var optionsAPI = "https://api.tradier.com/v1/markets/options/chains?symbol=";
-var quotesAPI = "https://api.tradier.com/v1/markets/history?symbol=";
+var quotesAPI = "https://api.tradier.com/v1/markets/history?start="+yyyy+"-"+mm+"-"+dd+"&symbol=";
 var symbolLookupAPI = "https://api.tradier.com/v1/markets/lookup?q=";
 var headers = {
   "Authorization": "Bearer " + token,
   "Accept": "application/json"
 };
+var newsAPI = "http://finance.yahoo.com/rss/headline?s=";
 
 Meteor.methods({
   fetchOptions: function(ticker, expDate) {
@@ -32,15 +38,26 @@ Meteor.methods({
     );
   },
 
+  fetchNews: function(ticker) {
+    return HTTP.get(
+      newsAPI + ticker
+    );
+  },
+
   lookupSymbol: function(ticker) {
     try {
       var result = HTTP.get(
         symbolLookupAPI + ticker,
         { headers: headers }
       );
-      return result.data.securities.security.slice(0,10);
+      var dataArr = result.data.securities.security;
+      if(dataArr.length > 10) {
+        return result.data.securities.security.slice(0,10);
+      } else {
+        return dataArr;
+      }
     } catch(error) {
-      return error;
+      throw error;
     }
   },
 

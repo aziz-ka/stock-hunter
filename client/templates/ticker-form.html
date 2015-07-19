@@ -1,23 +1,43 @@
 <template name="tickerForm">
-  <div class="container-fluid">
+  <div class="container-fluid tickerFormTemplate">
     <div class="row">
       <form action="" class="form-inline col-xs-12 ticker-form">
+
         <div class="form-group width28">
           <label for="" class="sr-only">Ticker Symbol</label>
-          <input type="text" class="form-control text-uppercase" name="ticker" placeholder="Ticker Symbol">
+          <input type="text" class="form-control text-uppercase" name="ticker" placeholder="Ticker Symbol" maxlength="7" required {{disableInput}}>
         </div>
 
         {{#if optionsUrl}}
           <div class="form-group width43">
             <label for="" class="sr-only">Expiration Date</label>
-            <input type="date" class="form-control" name="expDate" value="2015-07-17">
+            <input type="date" class="form-control" name="expDate" value="2015-07-17" required>
+          </div>
+        {{/if}}
+
+        {{#if homeUrl}}
+          <div class="form-group width43">
+            <label for="" class="sr-only">Time Frame</label>
+            <select name="dateRange" class="form-control">
+              <option value="22">30 days</option>
+              <option value="65">90 days</option>
+              <option value="127">6 months</option>
+              <option value="189">9 months</option>
+              <option value="256">1 year (weekly)</option>
+              <option value="509">2 years (weekly)</option>
+            </select>
           </div>
         {{/if}}
 
         <div class="form-group width26">
-          <button type="submit" class="btn btn-info" {{disableSubmit}}>Submit</button>
+          <button type="submit" class="btn btn-info">Submit</button>
         </div>
+
       </form>
+    </div>
+
+    <div class="alert alert-danger" role="alert">
+      <strong>Oh-oh!</strong> <span>That ticker is not in our database. Try another one.</span>
     </div>
 
     <div class="row">
@@ -27,5 +47,6 @@
         {{/each}}
       </div>
     </div>
+
   </div>
 </template>

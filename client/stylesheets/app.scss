@@ -1,18 +1,38 @@
 body {
-  .fa-line-chart {
-    line-height: 20px;
+  .navbar {
+    .navbar-toggle {
+      padding: 6px 10px !important;
+    }
+    .fa-line-chart {
+      line-height: 20px;
+    }
+    .navbar-text {
+      position: absolute;
+      right: 7em;
+    }
+    .navbar-collapse {
+      padding-right: 0;
+    }
   }
-  .navbar-toggle {
-    padding: 6px 10px !important;
+  .mainHeader {
+    margin: 3% auto 5%;
   }
-  .navbar-text {
-    position: absolute;
-    right: 7em;
+  #graph {
+    margin-top: 30px;
   }
-  .navbar-collapse {
-    padding-right: 0;
+  .newsTemplate {
+    .list-group {
+      max-height: 491px;
+      overflow-y: scroll;
+      .list-group-item {
+        border: 1px solid #f5f5f5;
+        small {
+          color: #aaa;
+        }
+      }
+    }
   }
-  .watchlist {
+  .watchlistTemplate {
     margin-top: 20px;
     .thumbnail {
     font-size: 2em;
@@ -20,20 +40,22 @@ body {
     }
   }
   .modal-header {
-      .alert-danger {
+    .alert-danger {
       margin: 0;
       padding: 6px 12px;
     }
   }
-  .list-group {
-    padding-left: 15px;
-    margin-top: 5px;
-    .list-group-item {
-      padding: 5px 10px;
+  .tickerFormTemplate {
+    .alert {
+      margin-top: 5px;
     }
-  }
-  h1 {
-    margin: 3% auto 5%;
+    .list-group {
+      padding-left: 15px;
+      margin-top: 5px;
+      .list-group-item {
+        padding: 5px 10px;
+      }
+    }
   }
   .table-responsive {
     margin-top: 20px;
@@ -62,14 +84,16 @@ body {
 
 @media(max-width: 766px) {
   body {
-    .navbar .nav {
-      border-bottom: 1px solid #e7e7e7;
-    }
-    .navbar-collapse {
-      padding-right: 15px;
-    }
-    .navbar-text {
-      right: 4.5em;
+    .navbar {
+      .nav {
+        border-bottom: 1px solid #e7e7e7;
+      }
+      .navbar-collapse {
+        padding-right: 15px;
+      }
+      .navbar-text {
+        right: 4.5em;
+      }
     }
     .ticker-form {
       .form-group {
@@ -95,9 +119,9 @@ body {
       .width26 {
         width: 26%;
       }
-    }
-    .list-group {
-      margin-top: -10px;
+      .list-group {
+        margin-top: -10px;
+      }
     }
     .table-responsive {
       margin-top: 0 !important;

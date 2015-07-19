@@ -3,6 +3,10 @@ Meteor.options = {
 
   options: function(optionsResult, ticker) {
     console.log(optionsResult.data);
+
+    $("#empty").text(ticker);
+    $(".data").empty();
+    
     var optionsData = optionsResult.data.options.option;
     
     optionsData.sort(function(a,b) {
