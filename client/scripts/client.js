@@ -12,9 +12,12 @@ Template.home.onRendered(function() {
   var ticker = Session.get("ticker");
   var quotes = Session.get("quotes");
 
+  // re-draw chart on home render
   if(ticker && quotes) {
-    // re-draw chart on home render
     Meteor.quotes.quotes(quotes, ticker, 22);
+  }
+  if(ticker && !quotes) {
+    $(".ticker-form").submit();
   }
 });
 
@@ -33,10 +36,14 @@ Template.news.onRendered(function() {
   }
 });
 
+Template.tweets.onRendered(function() {
+  twttr.widgets.load();
+});
+
 Template.options.onRendered(function() {
   var optionsData = Session.get("options");
   var ticker = Session.get("ticker");
-  if(optionsData[0].ticker === ticker) {
+  if(optionsData && optionsData[0].ticker === ticker) {
     // display options chain data when template is re-rendered
     Meteor.options.options(optionsData[0].content, ticker);
   } else {
@@ -88,6 +95,13 @@ Template.news.helpers({
   }
 });
 
+Template.tweets.helpers({
+  ticker: function() {
+    var ticker = Session.get("ticker");
+    if(ticker) return ticker;
+  }
+});
+
 //*** EVENTS ***\\
 
 Template.nav.events({
@@ -123,6 +137,10 @@ Template.tickerForm.events({
           template.symbols.set(lookupSymbolResult);
         }
       });
+    }
+
+    if(validateTicker) {
+      Meteor.errors.noTickerError(null);
     }
 
     // on ESC hide alert and symbol lookup results
@@ -197,6 +215,13 @@ Template.tickerForm.events({
         }
 
         Session.set("news", newsArray);
+      });
+
+      Meteor.call("getTweets", ticker, function(error, tweets, response) {
+        if(error) throw error;
+
+        console.log(response);
+        console.log(tweets);
       });
     }
 

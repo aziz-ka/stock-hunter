@@ -12,15 +12,23 @@ var yyyy = now.getFullYear() - 2;
 var mm = now.getMonth() + 1;
 var dd = 01;
 
-var token = "REX0QnMxrkwLpwYVGYgDIP0rnTmx";
+var tradierToken = Meteor.settings.tradier.token;
 var optionsAPI = "https://api.tradier.com/v1/markets/options/chains?symbol=";
 var quotesAPI = "https://api.tradier.com/v1/markets/history?start="+yyyy+"-"+mm+"-"+dd+"&symbol=";
 var symbolLookupAPI = "https://api.tradier.com/v1/markets/lookup?q=";
 var headers = {
-  "Authorization": "Bearer " + token,
+  "Authorization": "Bearer " + tradierToken,
   "Accept": "application/json"
 };
 var newsAPI = "http://finance.yahoo.com/rss/headline?s=";
+
+var TwitterAPI = Meteor.npmRequire("twitter");
+var Twitter = new TwitterAPI({
+  "consumer_key": Meteor.settings.twitter.consumer_key,
+  "consumer_secret": Meteor.settings.twitter.consumer_secret,
+  "access_token_key": Meteor.settings.twitter.access_token_key,
+  "access_token_secret": Meteor.settings.twitter.access_token_secret,
+});
 
 Meteor.methods({
   fetchOptions: function(ticker, expDate) {
@@ -42,6 +50,14 @@ Meteor.methods({
     return HTTP.get(
       newsAPI + ticker
     );
+  },
+
+  getTweets: function(ticker) {
+    var tweetSearch = function(ticker, callback) {
+      Twitter.get("search/tweets", {q: "%24" + ticker, lang: "en", result_type: "popular"}, callback);
+    };
+    var asyncTweetSearch = Meteor.wrapAsync(tweetSearch);
+    return asyncTweetSearch(ticker);
   },
 
   lookupSymbol: function(ticker) {

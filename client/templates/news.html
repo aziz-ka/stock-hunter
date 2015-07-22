@@ -1,14 +1,14 @@
 <template name="news">
   <div class="container-fluid newsTemplate hidden">
-    <h1>{{newsList.ticker}} News</h1>
-    <div class="row">
-      <div class="col-xs-12 col-sm-8 list-group">
-        {{#each newsList.content}}
-          <a href="{{link}}" target="_blank" class="list-group-item">{{title}}
-            <p class="list-group-item-text"><small>{{date}}</small></p>
-          </a>
-        {{/each}}
-      </div>
+    <div class="col-xs-12 col-sm-7 list-group">
+      <h1>{{newsList.ticker}} News</h1>
+      {{#each newsList.content}}
+        <a href="{{link}}" target="_blank" class="list-group-item">{{title}}
+          <p class="list-group-item-text"><small>{{date}}</small></p>
+        </a>
+      {{/each}}
     </div>
+
+    {{> tweets}}
   </div>
 </template>
