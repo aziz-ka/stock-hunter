@@ -1,14 +1,30 @@
 <template name="news">
   <div class="container-fluid newsTemplate hidden">
-    <div class="col-xs-12 col-sm-7 list-group">
-      <h1>{{newsList.ticker}} News</h1>
-      {{#each newsList.content}}
-        <a href="{{link}}" target="_blank" class="list-group-item">{{title}}
-          <p class="list-group-item-text"><small>{{date}}</small></p>
-        </a>
-      {{/each}}
-    </div>
+    <div class="row">
+      <div class="col-xs-12 col-sm-7">
+        <h1>{{newsList.ticker}} News</h1>
 
+        <div class="collapse" id="id1">
+          <div class="thumbnail">
+            <img src="{{embeds.thumbnail_url}}" alt="">
+            <div class="caption">
+              <h5>{{embeds.title}}</h5>
+              <p>{{embeds.description}}</p>
+              <p><a href="{{embeds.url}}"><small>Read full article on {{embeds.provider_name}}</small></a></p>
+            </div>
+          </div>
+        </div>
+
+        <div class="list-group">
+          {{#each newsList.content}}
+            <a href="{{link}}" target="_blank" class="list-group-item" data-toggle="collapse" data-target="#id1">{{title}}
+              <p class="list-group-item-text"><small>{{date}}</small></p>
+            </a>
+          {{/each}}
+        </div>
+      </div>
+      
     {{> tweets}}
+    </div>
   </div>
 </template>

@@ -21,6 +21,8 @@ var headers = {
   "Accept": "application/json"
 };
 var newsAPI = "http://finance.yahoo.com/rss/headline?s=";
+var embedlyToken = Meteor.settings.embedly.token;
+var embedlyAPI = "http://api.embed.ly/1/oembed?key="+embedlyToken+"&url=";
 
 var TwitterAPI = Meteor.npmRequire("twitter");
 var Twitter = new TwitterAPI({
@@ -49,6 +51,12 @@ Meteor.methods({
   fetchNews: function(ticker) {
     return HTTP.get(
       newsAPI + ticker
+    );
+  },
+
+  embedNews: function(url) {
+    return HTTP.get(
+      embedlyAPI + url
     );
   },
 

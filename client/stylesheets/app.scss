@@ -22,7 +22,7 @@ body {
   }
   .newsTemplate {
     .list-group {
-      max-height: 491px;
+      max-height: 400px;
       overflow-y: scroll;
       .list-group-item {
         border: 1px solid #f5f5f5;
@@ -33,7 +33,7 @@ body {
     }
   }
   .tweetsTemplate {
-    padding-right: 0;
+    /*padding-right: 0;*/
   }
   .watchlistTemplate {
     margin-top: 20px;

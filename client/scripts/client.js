@@ -92,6 +92,10 @@ Template.news.helpers({
   newsList: function() {
     var newsContent = Session.get("news");
     return newsContent[0];
+  },
+  embeds: function() {
+    var embededURL = Session.get("embeds");
+    return embededURL;
   }
 });
 
@@ -209,8 +213,10 @@ Template.tickerForm.events({
         for (i = 0; i < itemsArray.length; i++) {
           var title = $(itemsArray[i]).find("title").text();
           var link = $(itemsArray[i]).find("link").text();
+          link = link.substr(link.indexOf("*")+1);
           var date = $(itemsArray[i]).find("pubDate").text();
-          var newsObject = {"title": title, "link": link, "date": date};
+          var id = i;
+          var newsObject = {"title": title, "link": link, "date": date, "id": id};
           newsArray[0].content.push(newsObject);
         }
 
@@ -240,6 +246,22 @@ Template.tickerForm.events({
 
     if(ticker) {
       Meteor.quotes.quotes(quotes, ticker, dateRange);
+    }
+  }
+});
+
+Template.news.events({
+  "click .list-group a": function(event) {
+    event.preventDefault();
+    var url = this.link;
+    var encodedURL = encodeURIComponent(url);
+    // avoid unnecessary API calls if news embed is expanded
+    if(!($(".newsTemplate .collapse").hasClass("in"))) {
+      Meteor.call("embedNews", encodedURL, function(error, embeds) {
+        if(error) throw error;
+        console.log(embeds.data);
+        Session.set("embeds", embeds.data);
+      });
     }
   }
 });
