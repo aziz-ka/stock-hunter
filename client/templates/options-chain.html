@@ -1,6 +1,6 @@
 <template name="options">
 {{> tickerForm}}
-  <div class="container-fluid">
+  <div class="container-fluid optionsTemplate">
     <div class="row">
       <div class="col-xs-12">
         <div class="table-responsive">
@@ -30,5 +30,10 @@
         </div>
       </div>
     </div>
+
+    <div class="alert alert-danger" role="alert">
+      <strong>Oh-oh!</strong> <span>{{ticker}} has no options.</span>
+    </div>
+
   </div>
 </template>

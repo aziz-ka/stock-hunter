@@ -4,10 +4,27 @@
   <div class="container-fluid watchlistTemplate">
     <div class="row">
       {{#each ticker}}
-        <div class="col-xs-6 col-md-2">
-          <a href="#" class="thumbnail text-center">
-            {{this}}
-          </a>
+        <div class="col-xs-6 col-sm-4">
+          <div class="thumbnail" style="background-color: {{color}}">
+
+            <a href="/"><h3 class="ticker-link text-center"><span>{{symbol}}</span>, {{description}}</h3></a>
+
+            <div class="caption">
+              <div class="row">
+                <div class="col-xs-6">
+                  <p>Last: {{last}}</p>
+                  <p>Volume: {{volume}}M</p>
+                  <p>Open: {{open}}</p>
+                </div>
+                <div class="col-xs-6">
+                  <p>High: {{high}}</p>
+                  <p>Low: {{low}}</p>
+                  <p>Close: {{close}}</p>
+                </div>
+              </div>
+            </div>
+
+          </div>
         </div>
       {{/each}}
     </div>

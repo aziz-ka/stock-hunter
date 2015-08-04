@@ -21,6 +21,12 @@ body {
     margin-top: 30px;
   }
   .newsTemplate {
+    .thumbnail {
+      img {
+        max-height: 400px;
+        width: 100%;
+      }
+    }
     .list-group {
       max-height: 400px;
       overflow-y: scroll;
@@ -38,8 +44,7 @@ body {
   .watchlistTemplate {
     margin-top: 20px;
     .thumbnail {
-    font-size: 2em;
-    height: 2em;
+    /*height: 220px;*/
     }
   }
   .modal-header {

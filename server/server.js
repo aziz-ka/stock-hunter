@@ -12,17 +12,20 @@ var yyyy = now.getFullYear() - 2;
 var mm = now.getMonth() + 1;
 var dd = 01;
 
+var embedlyToken = Meteor.settings.embedly.token;
 var tradierToken = Meteor.settings.tradier.token;
-var optionsAPI = "https://api.tradier.com/v1/markets/options/chains?symbol=";
-var quotesAPI = "https://api.tradier.com/v1/markets/history?start="+yyyy+"-"+mm+"-"+dd+"&symbol=";
-var symbolLookupAPI = "https://api.tradier.com/v1/markets/lookup?q=";
+
 var headers = {
   "Authorization": "Bearer " + tradierToken,
   "Accept": "application/json"
 };
-var newsAPI = "http://finance.yahoo.com/rss/headline?s=";
-var embedlyToken = Meteor.settings.embedly.token;
+var intradayQuotesAPI = "https://api.tradier.com/v1/markets/quotes?symbols=";
+var optionsAPI = "https://api.tradier.com/v1/markets/options/chains?symbol=";
+var quotesAPI = "https://api.tradier.com/v1/markets/history?start="+yyyy+"-"+mm+"-"+dd+"&symbol=";
+var symbolLookupAPI = "https://api.tradier.com/v1/markets/lookup?q=";
+
 var embedlyAPI = "http://api.embed.ly/1/oembed?key="+embedlyToken+"&url=";
+var newsAPI = "http://finance.yahoo.com/rss/headline?s=";
 
 var TwitterAPI = Meteor.npmRequire("twitter");
 var Twitter = new TwitterAPI({
@@ -33,18 +36,25 @@ var Twitter = new TwitterAPI({
 });
 
 Meteor.methods({
-  fetchOptions: function(ticker, expDate) {
-    console.log(ticker, expDate);
-    return HTTP.get(
-      optionsAPI + ticker + "&expiration=" + expDate,
-      { headers: headers }
-    );
+  addToWatchlist: function(ticker) {
+    Meteor.users.update({"_id": this.userId}, {$addToSet: {"watchlist": ticker}});
   },
 
-  fetchQuotes: function(ticker) {
+  createNewUser: function(email, password) {
+    if(password.length > 5) {
+      Accounts.createUser({
+        email: email,
+        password: password
+      });
+    } else {
+      var passwordError = new Meteor.Error(403, "Password must be at least 6 characters long");
+      throw passwordError;
+    }
+  },
+
+  embedNews: function(url) {
     return HTTP.get(
-      quotesAPI + ticker,
-      { headers: headers }
+      embedlyAPI + url
     );
   },
 
@@ -54,9 +64,18 @@ Meteor.methods({
     );
   },
 
-  embedNews: function(url) {
+  fetchOptions: function(ticker, expDate) {
+    console.log(ticker, expDate);
     return HTTP.get(
-      embedlyAPI + url
+      optionsAPI + ticker + "&expiration=" + expDate,
+      {headers: headers}
+    );
+  },
+
+  fetchQuotes: function(ticker) {
+    return HTTP.get(
+      quotesAPI + ticker,
+      {headers: headers}
     );
   },
 
@@ -68,11 +87,18 @@ Meteor.methods({
     return asyncTweetSearch(ticker);
   },
 
+  intradayQuotes: function(tickers) {
+    return HTTP.get(
+      intradayQuotesAPI + tickers,
+      {headers: headers}
+    );
+  },
+
   lookupSymbol: function(ticker) {
     try {
       var result = HTTP.get(
         symbolLookupAPI + ticker,
-        { headers: headers }
+        {headers: headers}
       );
       var dataArr = result.data.securities.security;
       if(dataArr.length > 10) {
@@ -82,22 +108,6 @@ Meteor.methods({
       }
     } catch(error) {
       throw error;
-    }
-  },
-
-  addToWatchlist: function(ticker) {
-    Meteor.users.update({"_id": this.userId}, {$push: {"watchlist": ticker}});
-  },
-
-  createNewUser: function(email, password) {
-    if(password.length > 5) {
-      Accounts.createUser({
-        email: email,
-        password: password
-      });
-    } else {
-      var passwordError = new Meteor.Error(403, "Password must be at least 5 characters long");
-      throw passwordError;
     }
   }
 });
