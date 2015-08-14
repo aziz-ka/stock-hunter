@@ -39,9 +39,22 @@ body {
     }
   }
   .positionsTemplate {
+    margin-top: 20px;
     .fa.pull-left {
       margin: 0 5px;
       line-height: 18px;
+    }
+    .remove {
+      cursor: pointer;      
+    }
+    .fa-trash-o {
+      color: #fff;
+    }
+    tr:hover .fa-trash-o{
+      color: #aaa;
+    }
+    .total {
+      background-color: #fafafa;
     }
   }
   .tweetsTemplate {
@@ -108,6 +121,7 @@ body {
     .navbar {
       .nav {
         border-bottom: 1px solid #e7e7e7;
+        margin-bottom: 0;
       }
       .navbar-collapse {
         padding-right: 15px;
@@ -119,6 +133,7 @@ body {
     .ticker-form {
       .form-group {
         display: inline-block;
+        width: 50%;
         input[type="date"]::-webkit-inner-spin-button {
           -webkit-appearance: none;
           display: none;
@@ -131,7 +146,7 @@ body {
           margin-bottom: 2px;
         }
       }
-      .width28 {
+      /*.width28 {
         width: 28%;
       }
       .width43 {
@@ -139,7 +154,7 @@ body {
       }
       .width26 {
         width: 26%;
-      }
+      }*/
       .list-group {
         margin-top: -10px;
       }

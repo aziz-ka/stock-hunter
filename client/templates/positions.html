@@ -15,6 +15,7 @@
                 <th>P/L Open, &dollar;</th>
                 <th>P/L Open, &percnt;</th>
                 <th>Purchase Date</th>
+                <th></th>
               </tr>
             </thead>
             <tbody>
@@ -27,8 +28,21 @@
                   <td>{{PLDollar}}</td>
                   <td>{{PLPercent}}</td>
                   <td>{{date}}</td>
+                  <td class="remove"><i class="fa fa-trash-o"></i></td>
                 </tr>
               {{/each}}
+              {{#if currentUser}}
+                <tr class="total">
+                  <td><strong>Total</strong></td>
+                  <td></td>
+                  <td></td>
+                  <td></td>
+                  <td><strong>{{total.totalPLDollar}}</strong></td>
+                  <td><strong>{{total.totalPLPercent}}</strong></td>
+                  <td><strong>{{total.totalInvested}}</strong><br/>(invested to date)</td>
+                  <td></td>
+                </tr>
+              {{/if}}
             </tbody>
           </table>
         </div>

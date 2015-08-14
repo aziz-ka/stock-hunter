@@ -42,6 +42,7 @@ Meteor.methods({
 
   addPosition: function(ticker, amount, price, date) {
     Meteor.users.update({"_id": this.userId}, {$addToSet: {"positions": {
+      // "positionId": new Mongo.ObjectId()._str,
       "ticker": ticker,
       "amount": amount,
       "price": price,
@@ -122,6 +123,10 @@ Meteor.methods({
 
   removeFromWL: function(ticker) {
     Meteor.users.update({"_id": this.userId}, {$pull: {"watchlist": ticker}});
+  },
+
+  removePosition: function(ticker, date) {
+    Meteor.users.update({"_id": this.userId}, {$pull: {"positions": {"ticker": ticker, "date": date}}}, {multi: true});
   }
 });
 
