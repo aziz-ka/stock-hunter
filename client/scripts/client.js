@@ -13,10 +13,10 @@ Template.home.onRendered(function() {
   var quotes = Session.get("quotes");
   var ticker = Session.get("ticker");
 
-  // re-draw chart on home render
   if(ticker && !quotes || news.ticker !== ticker) {
     $(".ticker-form").submit();
   }
+  // re-draw chart on home render
   if(ticker && quotes) {
     Meteor.quotes.quotes(quotes, ticker, 22);
   }
@@ -31,6 +31,10 @@ Template.news.onRendered(function() {
 Template.options.onRendered(function() {
   var optionsData = Session.get("options");
   var ticker = Session.get("ticker");
+
+  if(!ticker) {
+    $(".optionsTemplate .alert").hide();
+  }
 
   if(optionsData && optionsData[0].ticker === ticker && optionsData[0].content.data.options !== null) {
     // display options chain data when template is re-rendered
@@ -79,12 +83,50 @@ Template.options.helpers({
   }
 });
 
+Template.positions.helpers({
+  positions: function() {
+    var positions = Meteor.user().positions;
+    var tickers = "";
+    for(var j = 0; j < positions.length; j++) {
+      tickers = tickers.concat(positions[j].ticker + ",");
+    }
+    // get current price for each position in order to calculate P/Ls
+    Meteor.call("intradayQuotes", tickers, function(error, positionsResult) {
+      if(error) throw error;
+      var data = positionsResult.data.quotes.quote;
+
+      for(var i = 0; i < positions.length; i++) {
+        var currentPrice = data[i].last;
+        var PLDollar = +((currentPrice - positions[i].price) * positions[i].amount).toFixed(2);
+        var PLPercent = +(currentPrice / positions[i].price * 100 - 100).toFixed(2);
+        positions[i]["currentPrice"] = currentPrice;
+        positions[i]["PLDollar"] = PLDollar;
+        positions[i]["PLPercent"] = PLPercent;
+        if(PLPercent > 0) {
+          positions[i]["upORdown"] = "up";
+          positions[i]["color"] = "#acffac";
+        } else {
+          positions[i]["upORdown"] = "down";
+          positions[i]["color"] = "#ffacac";
+        }
+      }
+
+      Session.set("positions", positions);
+    });
+
+    return Session.get("positions");
+  }
+});
+
 Template.tickerForm.helpers({
   optionsUrl: function() {
     return Meteor.helperFunctions.currentUrl("options");
   },
   homeUrl: function() {
     return Meteor.helperFunctions.currentUrl(undefined);
+  },
+  positionsUrl: function() {
+    return Meteor.helperFunctions.currentUrl("positions");
   },
   disableInput: function() {
     // if not logged in disable submit
@@ -114,7 +156,7 @@ Template.watchlists.helpers({
     var currentUser = Meteor.userId();
     var WLSession = Session.get("WLQuotes");
     var WLTickers = Meteor.user().watchlist;
-    if(!WLSession || WLTickers.length > WLSession.length) {
+    if(!WLSession || WLTickers.length !== WLSession.length) {
       Meteor.call("intradayQuotes", WLTickers.toString(), function(error, WLTickersResult) {
         if(error) throw error;
 
@@ -316,6 +358,14 @@ Template.tickerForm.events({
       // });
     }
 
+    if(Meteor.helperFunctions.currentUrl("positions")) {
+      var amount = event.target.amountBought.value;
+      var price = event.target.priceBought.value;
+      var date = event.target.dateBought.value;
+
+      Meteor.call("addPosition", ticker, amount, price, date);
+    }
+
     if(Meteor.helperFunctions.currentUrl("watchlists")) {
       Meteor.call("addToWatchlist", ticker);
     }
@@ -339,6 +389,10 @@ Template.watchlists.events({
   "click .watchlistTemplate .ticker-link": function(event) {
     var ticker = this.symbol;
     Session.set("ticker", ticker);
+  },
+  "click .close": function(event) {
+    var ticker = this.symbol;
+    Meteor.call("removeFromWL", ticker);
   }
 });
 

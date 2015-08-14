@@ -38,6 +38,12 @@ body {
       }
     }
   }
+  .positionsTemplate {
+    .fa.pull-left {
+      margin: 0 5px;
+      line-height: 18px;
+    }
+  }
   .tweetsTemplate {
     /*padding-right: 0;*/
   }
@@ -45,6 +51,10 @@ body {
     margin-top: 20px;
     .thumbnail {
     /*height: 220px;*/
+      .close {
+        position: relative;
+        top: -5px;
+      }
     }
   }
   .modal-header {
@@ -66,6 +76,9 @@ body {
     }
   }
   .table-responsive {
+    .text-left {
+      text-align: left;
+    }
     margin-top: 20px;
     tr, th, td {
       text-align: center;

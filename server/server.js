@@ -40,6 +40,15 @@ Meteor.methods({
     Meteor.users.update({"_id": this.userId}, {$addToSet: {"watchlist": ticker}});
   },
 
+  addPosition: function(ticker, amount, price, date) {
+    Meteor.users.update({"_id": this.userId}, {$addToSet: {"positions": {
+      "ticker": ticker,
+      "amount": amount,
+      "price": price,
+      "date": date
+    }}});
+  },
+
   createNewUser: function(email, password) {
     if(password.length > 5) {
       Accounts.createUser({
@@ -109,6 +118,10 @@ Meteor.methods({
     } catch(error) {
       throw error;
     }
+  },
+
+  removeFromWL: function(ticker) {
+    Meteor.users.update({"_id": this.userId}, {$pull: {"watchlist": ticker}});
   }
 });
 
