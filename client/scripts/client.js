@@ -41,6 +41,11 @@ Template.options.onRendered(function() {
   }
 });
 
+Template.positions.onRendered(function() {
+  $(".form-group").attr("id", "form-align");
+  $(".list-group").addClass("margin-top-75");
+});
+
 Template.tickerForm.onRendered(function() {
   var ticker = Session.get("ticker");
 
@@ -366,7 +371,9 @@ Template.tickerForm.events({
   },
 
   "blur .ticker-form input[name='ticker']": function() {
-    $(".tickerFormTemplate .list-group").addClass("hidden");
+    setTimeout(function() {
+      $(".tickerFormTemplate .list-group").addClass("hidden");
+    }, 0);
   },
 
   "change select[name='dateRange']": function(event) {
