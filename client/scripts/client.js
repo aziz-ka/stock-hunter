@@ -9,12 +9,16 @@ Template.tickerForm.onCreated(function() {
 //*** ON TEMPLATE RENDER ***\\
 
 Template.home.onRendered(function() {
-  var news = Session.get("news")[0];
+  var news = Session.get("news");
   var quotes = Session.get("quotes");
   var ticker = Session.get("ticker");
 
-  // BUG - doesn't fire on intial load :[
-  if(ticker && !quotes || news.ticker !== ticker) {
+  // on initial site load display SPY info
+  if(!(ticker && quotes && news)) {
+    $(".ticker-form input[name='ticker']").val("SPY");
+    $(".ticker-form").submit();
+  }
+  if(ticker && !quotes || news[0].ticker !== ticker) {
     $(".ticker-form").submit();
   }
   // re-draw chart on home render
@@ -172,9 +176,9 @@ Template.watchlists.helpers({
         
         for(var i = 0; i < data.length; i++) {
           if(data[i].change > 0) {
-            data[i]["color"] = "#acffac";
+            data[i]["color"] = "#ccffcc";
           } else {
-            data[i]["color"] = "#ffacac";
+            data[i]["color"] = "#ffcccc";
           }
           data[i].volume = +(data[i].volume / 1000000).toFixed(1);
         }
@@ -373,7 +377,7 @@ Template.tickerForm.events({
   "blur .ticker-form input[name='ticker']": function() {
     setTimeout(function() {
       $(".tickerFormTemplate .list-group").addClass("hidden");
-    }, 0);
+    }, 10);
   },
 
   "change select[name='dateRange']": function(event) {
