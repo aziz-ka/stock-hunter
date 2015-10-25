@@ -2,8 +2,6 @@
 Meteor.quotes = {
 
   quotes: function(quotesResult, ticker, dateRange) {
-    console.log(quotesResult.data);
-
     var step = 1;
     var dateArr = [];
     var closeArr = [];

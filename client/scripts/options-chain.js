@@ -2,8 +2,6 @@ Meteor.options = {
   strikePriceArray: [],
 
   options: function(optionsResult, ticker) {
-    console.log(optionsResult.data);
-
     $("#empty").text(ticker);
     $(".data").empty();
     

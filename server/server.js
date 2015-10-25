@@ -75,7 +75,6 @@ Meteor.methods({
   },
 
   fetchOptions: function(ticker, expDate) {
-    console.log(ticker, expDate);
     return HTTP.get(
       optionsAPI + ticker + "&expiration=" + expDate,
       {headers: headers}

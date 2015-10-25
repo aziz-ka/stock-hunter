@@ -142,11 +142,25 @@ Template.positions.helpers({
 });
 
 Template.tickerForm.helpers({
+  homeUrl: function() {
+    return Meteor.helperFunctions.currentUrl(undefined);
+  },
   optionsUrl: function() {
     return Meteor.helperFunctions.currentUrl("options");
   },
-  homeUrl: function() {
-    return Meteor.helperFunctions.currentUrl(undefined);
+  thirdFriday: function() {
+    var today = new Date();
+    var year = today.getFullYear();
+    var month = today.getMonth();
+    var nextMonth = new Date(year, month + 1);
+    var thirdFriday;
+    if(nextMonth.getDay() < 6) {
+      thirdFriday = 20 - nextMonth.getDay();
+    } else {
+      thirdFriday = 21;
+    }
+    var getFriday = new Date(year, month + 1, thirdFriday);
+    return moment(getFriday).format("YYYY-MM-DD");
   },
   positionsUrl: function() {
     return Meteor.helperFunctions.currentUrl("positions");
@@ -215,7 +229,6 @@ Template.news.events({
     if(!($(".newsTemplate .collapse").hasClass("in"))) {
       Meteor.call("embedNews", encodedURL, function(error, embeds) {
         if(error) throw error;
-        console.log(embeds.data);
         Session.set("embeds", embeds.data);
       });
     }
